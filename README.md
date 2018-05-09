@@ -24,10 +24,10 @@
 
 # ADDITIONAL DESCRIPTION
 
-  Cloned and edited from https://github.com/EssexUniversityMCTS/gvgai
-  Visit http://www.gvgai.net/ for more information.
+  Cloned and edited from https://github.com/EssexUniversityMCTS/gvgai <br>
+  Visit http://www.gvgai.net/ for more information. <br>
 
 # 
 **PROGRAM VERSION: 0.0.1 (Alpha)<br>**
 
-THIS DOCUMENT IS EDITED AS-OF 08 MAY 2018<br>
+THIS DOCUMENT IS EDITED AS-OF 09 MAY 2018<br>
