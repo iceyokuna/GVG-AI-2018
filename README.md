@@ -1,6 +1,6 @@
 # INTRODUCTION
 
-  This program is created for <br>
+  This repository is created for <br>
   GVG-AI Competition 2018 (The General Video Gaming Competition 2018)<br>
   M21.1 - Programming Exercises<br>
 
@@ -13,9 +13,9 @@
 # AUTHORS AND PROGRAMMER
 
   Bhurinuth Wongsrisakul (1237005 - 58090030) - Project Manager  <br>
-  Parin Kobboon (1236420 - 58090023) -  <br>
-  Pakpoom Kunalittipol (1236446 - 58090027) -  <br>
-  Thanapar Leelasathapornkun (1236491 - 58090019) -  <br>
+  Parin Kobboon (1236420 - 58090023) -  Algorithm Integrator 1<br>
+  Pakpoom Kunalittipol (1236446 - 58090027) - Algorithm Integrator 2<br>
+  Thanapar Leelasathapornkun (1236491 - 58090019) - Main Researcher<br>
 
 
 # INITIAL DESCRIPTION
@@ -24,7 +24,8 @@
 
 # ADDITIONAL DESCRIPTION
 
-  **None**
+  Cloned and edited from https://github.com/EssexUniversityMCTS/gvgai
+  Visit http://www.gvgai.net/ for more information.
 
 # 
 **PROGRAM VERSION: 0.0.1 (Alpha)<br>**
