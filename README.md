@@ -1,43 +1,32 @@
-gvgai
-=====
+# INTRODUCTION
 
-This is the framework for the General Video Game Competition 2014 - http://www.gvgai.net/
+  This program is created for <br>
+  GVG-AI Competition 2018 (The General Video Gaming Competition 2018)<br>
+  M21.1 - Programming Exercises<br>
 
-Google group - https://groups.google.com/forum/#!forum/the-general-video-game-competition
+  GVGAI Competition 2018 Track 1 (Single Player Planning) WCCI-2018<br>
 
-## FAQs / Troubleshooting
+  Bachelor or Informatik - Fach Semester 4<br>
+  Frankfurt University of Applied Sciences<br>
+  Exchange Students from King Mongkut's Institute of Technology Ladkrabang (KMITL)<br>
 
-**3. Where are the Test methods? Due to the explosion of GVGAI competition tracks, we have distributed the main methods in different classes across the code hierarchy:
+# AUTHORS AND PROGRAMMER
 
- - Single Player Planning track: tracks.singlePlayer.Test.java
- - 2-Player Planning track: tracks.multiPlayer.TestMultiPlayer.java
- - Level Generation track: tracks.levelGeneration.TestLevelGeneration.java
- - Rule Generation track: tracks.ruleGeneration.TestRuleGeneration.java
-
-
-**2. How do I upload my controller? What files or folder structure do I need? 
-First of all, your controller ```Agent.java``` and any auxiliary files you create should be in a single package folder with your username. For example, if your username is "abc", you should have a package folder named "abc" in the project. Your entire project layout should look something like this:
-
-```groovy
-- abc
-	|- Agent.java
-	|- MyAdditionalFile1.java
-	|- MyAdditionalFile2.java
-- tracks
-- core
-- ontology
-- tools
-```
-
-Then, all you need to do is to zip and upload the "abc" folder. No other folders/files are necessary.
+  Bhurinuth Wongsrisakul (1237005 - 58090030) - Project Manager  <br>
+  Parin Kobboon (1236420 - 58090023) -  <br>
+  Pakpoom Kunalittipol (1236446 - 58090027) -  <br>
+  Thanapar Leelasathapornkun (1236491 - 58090019) -  <br>
 
 
-**3. I am getting the error `javac1.8 class not found` when running Eclipse and ANT on build.xml**
-This is likely because the ANT version that is installed with your version of Eclipse is old. You can easily fix this problem by doing the following:
+# INITIAL DESCRIPTION
 
-- Download the archive of the [latest version of ANT](http://ant.apache.org/bindownload.cgi) (Tested with  Ant 1.9.4)
-- Extract the archive onto a local folder on your computer (e.g., /Users/gvgai/ant/apache-ant-1.9.4/)
-- In Eclipse, go to Eclipse -> Preferences -> Ant -> Runtime
-- Click on "Ant Home'' button on the right.
-- Select the folder, which you extracted ANT into (e.g., /Users/gvgai/ant/apache-ant-1.9.4/)
+  == No description at the moment ==
 
+# ADDITIONAL DESCRIPTION
+
+  **None**
+
+# 
+**PROGRAM VERSION: 0.0.1 (Alpha)<br>**
+
+THIS DOCUMENT IS EDITED AS-OF 08 MAY 2018<br>
