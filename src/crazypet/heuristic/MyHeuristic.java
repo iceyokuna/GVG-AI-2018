@@ -1,7 +1,6 @@
 package crazypet.heuristic;
 
 import core.game.StateObservation;
-import ontology.Types;
 import tracks.singlePlayer.tools.Heuristics.StateHeuristic;
 import java.util.*;
 
@@ -10,6 +9,7 @@ public class MyHeuristic extends StateHeuristic {
     private double cost = 0;
 
     public MyHeuristic() {
+        // initialize heuristic evaluation methods with determined cost for each method
         heuristics.put(new GameOverHeuristic(), 10e7);
         heuristics.put(new HealthHeuristic(), 10.0);
         heuristics.put(new ScoreHeuristic(), 10.0);
@@ -23,10 +23,5 @@ public class MyHeuristic extends StateHeuristic {
             cost += h.getKey().evaluate(stateObs, h.getValue());
         }
         return cost;
-    }
-
-    public static void main(String[] args) {
-        MyHeuristic mh = new MyHeuristic();
-        System.out.println(mh.evaluateState(null));
     }
 }
