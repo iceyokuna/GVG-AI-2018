@@ -67,6 +67,7 @@ public class AstarAgent extends GameAgent {
     }
 
     public Types.ACTIONS walkToItem(StateObservation stateObservation, ElapsedCpuTimer elapsedTime){
+        System.out.println("Enter walk to Item");
         itemsList = stateObservation.getImmovablePositions();
         if(itemsList != null){
             Vector2d playerPosition = stateObservation.getAvatarPosition();
@@ -86,6 +87,7 @@ public class AstarAgent extends GameAgent {
     }
 
     public Types.ACTIONS walkToPortal(StateObservation stateObservation, ElapsedCpuTimer elapsedTime){
+        System.out.println("Enter walk to Portal");
         portalsList = stateObservation.getPortalsPositions();
         if(portalsList != null){
             Vector2d playerPosition = stateObservation.getAvatarPosition();
@@ -107,6 +109,7 @@ public class AstarAgent extends GameAgent {
     }
 
     public Types.ACTIONS walkToNpc(StateObservation stateObservation, ElapsedCpuTimer elapsedTime){
+        System.out.println("Enter walk to NPC");
         npcsList = stateObservation.getNPCPositions();
         if(npcsList != null){
             Vector2d playerPosition = stateObservation.getAvatarPosition();
@@ -123,15 +126,18 @@ public class AstarAgent extends GameAgent {
 
     //use path finder (A star algorithm to find the action to destination)
     public Types.ACTIONS getActionToDestination(Vector2d playerPos, Vector2d goalPos){
-        boolean ATK_USE_ABLE = stateObservation.getAvailableActions().contains(Types.ACTIONS.ACTION_USE);
-        if(ATK_USE_ABLE){
-            return Types.ACTIONS.ACTION_USE;
-        }
+        //boolean ATK_USE_ABLE = stateObservation.getAvailableActions().contains(Types.ACTIONS.ACTION_USE);
+        //if(ATK_USE_ABLE){
+        //    return Types.ACTIONS.ACTION_USE;
+        //}
+        System.out.println("Passed before find path");
         ArrayList<Node> path = pathFinder.getPath(playerPos, goalPos);
         if(path != null) {
+            System.out.println("Passed after find path");
             Vector2d nextPath = path.get(0).position;
             return getActionFromPosition(playerPos, nextPath);
         }
+        System.out.println("Passed after cannot find path");
         return null;
     }
 
@@ -143,23 +149,26 @@ public class AstarAgent extends GameAgent {
 
     //core function to return action to controller
     @Override
-    public Types.ACTIONS run(StateObservation stateObservation, ElapsedCpuTimer elapsedTime){
+    public Types.ACTIONS run(StateObservation stateObservation, ElapsedCpuTimer elapsedTime) {
 
-        Types.ACTIONS action = walkToItem(stateObservation,elapsedTime);
-
-        if(action != null){
+        Types.ACTIONS action = walkToItem(stateObservation, elapsedTime);
+        if (action != null) {
+            System.out.println("Game Tick return walk to item");
             return action;
         }
 
-        action = walkToPortal(stateObservation,elapsedTime);
-        if(action != null){
+        action = walkToPortal(stateObservation, elapsedTime);
+        if (action != null) {
+            System.out.println("Game Tick return walk to portal");
             return action;
         }
 
-        action = walkToNpc(stateObservation,elapsedTime);
-        if(action != null){
-            return action;
-        }
+        //action = walkToNpc(stateObservation, elapsedTime);
+        //if (action != null) {
+        //    System.out.println("Game Tick return walk to NPC");
+        //    return action;
+        //}
+        System.out.println("Game Tick");
 
         return null;
     }
