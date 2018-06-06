@@ -160,7 +160,6 @@ public class AstarAgent extends GameAgent {
 
     //use to check that be able to attack or not
     public boolean isAbleToAttack(){
-
         return false;
     }
 
