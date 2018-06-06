@@ -25,6 +25,9 @@ public class AstarAgent extends GameAgent {
 
     //Agent state
     private int step_count;
+    private Types.ACTIONS prev_action;
+    private Vector2d current_position;
+    private Vector2d prev_position;
 
     //Item state
     private ArrayList<Observation> itemsList[];
@@ -47,6 +50,9 @@ public class AstarAgent extends GameAgent {
 
         //initialize game parameter
         step_count = 0;
+        prev_action = Types.ACTIONS.ACTION_NIL;
+        prev_position = new Vector2d();
+        current_position = stateObservation.getAvatarPosition();
         block_size = stateObservation.getBlockSize();
 
         //initialize list of game objects
@@ -130,14 +136,9 @@ public class AstarAgent extends GameAgent {
 
     //use path finder (A star algorithm to find the action to destination)
     public Types.ACTIONS getActionToDestination(Vector2d playerPos, Vector2d goalPos){
-        //boolean ATK_USE_ABLE = stateObservation.getAvailableActions().contains(Types.ACTIONS.ACTION_USE);
-        //if(ATK_USE_ABLE){
-        //    return Types.ACTIONS.ACTION_USE;
-        //}
         System.out.println("Passed before find path");
         Vector2d playerPosition = new Vector2d(playerPos);
         Vector2d goalPosition = new Vector2d(goalPos);
-
         playerPosition.mul(1.0 / block_size);
         goalPosition.mul(1.0 / block_size);
 
@@ -146,7 +147,22 @@ public class AstarAgent extends GameAgent {
         if(path != null) {
             System.out.println("Passed after find path");
             Vector2d nextPath = path.get(0).position;
-            return getActionFromPosition(playerPosition, nextPath);
+            Types.ACTIONS action  = getActionFromPosition(playerPosition, nextPath);
+
+            //System.out.println(stateObservation.getAvailableActions().contains(Types.ACTIONS.ACTION_USE));
+            //System.out.println(isAbleToAttack(stateObservation, action));
+
+            if(isAbleToAttack(stateObservation, action)){
+                action = Types.ACTIONS.ACTION_USE;
+                prev_position = new Vector2d(current_position);
+                current_position = new Vector2d(playerPos);
+                prev_action = action;
+                return action;
+            }
+            prev_position = new Vector2d(current_position);
+            current_position = new Vector2d(playerPos);
+            prev_action = action;
+            return action;
         }
         System.out.println("Passed after cannot find path");
         return null;
@@ -159,8 +175,28 @@ public class AstarAgent extends GameAgent {
     }
 
     //use to check that be able to attack or not
-    public boolean isAbleToAttack(){
+    public boolean isAbleToAttack(StateObservation stateObservation, Types.ACTIONS nextAct){
+        StateObservation nextState = stateObservation.copy();
+        nextState.advance(nextAct);
+        //System.out.println(actionCausedDeath(nextState));
+        //System.out.println(actionNoMoving(stateObservation));
+        if(actionCausedDeath(nextState) || actionNoMoving(stateObservation)){
+            return true;
+        }
         return false;
+    }
+
+    //activate action move but player death in next action = attack enemy
+    public boolean actionCausedDeath(StateObservation nextStateObservation){
+        return (nextStateObservation.isGameOver() && nextStateObservation.getGameWinner() == Types.WINNER.PLAYER_LOSES);
+    }
+
+
+    //activate action move but player sprite not move = attack the immovable wall(need to destroy)
+    public boolean actionNoMoving(StateObservation stateObservation){
+        //System.out.println(current_position);
+        //System.out.println(prev_position);
+        return current_position.equals(prev_position) && prev_action != Types.ACTIONS.ACTION_USE;
     }
 
     //core function to return action to controller
