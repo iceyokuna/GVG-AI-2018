@@ -135,8 +135,6 @@ public class AstarAgent extends GameAgent {
         //    return Types.ACTIONS.ACTION_USE;
         //}
         System.out.println("Passed before find path");
-        //System.out.println(playerPos.toString());
-        //System.out.println(goalPos.toString());
         Vector2d playerPosition = new Vector2d(playerPos);
         Vector2d goalPosition = new Vector2d(goalPos);
 
@@ -160,28 +158,33 @@ public class AstarAgent extends GameAgent {
         return Types.ACTIONS.fromVector(moveVector);
     }
 
+    //use to check that be able to attack or not
+    public boolean isAbleToAttack(){
+        return false;
+    }
+
     //core function to return action to controller
     @Override
     public Types.ACTIONS run(StateObservation stateObservation, ElapsedCpuTimer elapsedTime) {
 
-        //Types.ACTIONS action = walkToItem(stateObservation, elapsedTime);
-        //if (action != null) {
-        //    System.out.println("Game Tick return walk to item");
-        //    return action;
-        //}
+        Types.ACTIONS action = walkToItem(stateObservation, elapsedTime);
+        if (action != null) {
+            System.out.println("Game Tick return walk to item");
+            return action;
+        }
 
-        Types.ACTIONS action = walkToPortal(stateObservation, elapsedTime);
+        action = walkToPortal(stateObservation, elapsedTime);
         System.out.println(action);
         if (action != null) {
             System.out.println("Game Tick return walk to portal");
             return action;
         }
 
-        //action = walkToNpc(stateObservation, elapsedTime);
-        //if (action != null) {
-        //    System.out.println("Game Tick return walk to NPC");
-        //    return action;
-        //}
+        action = walkToNpc(stateObservation, elapsedTime);
+        if (action != null) {
+            System.out.println("Game Tick return walk to NPC");
+            return action;
+        }
         System.out.println("Game Tick");
 
         return null;
