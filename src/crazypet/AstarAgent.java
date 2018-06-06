@@ -17,6 +17,9 @@ import java.util.ArrayList;
 
 public class AstarAgent extends GameAgent {
 
+    //necessary parameters
+    private int block_size;
+
     //Path finder (A star algorithm)
     private PathFinder pathFinder;
 
@@ -44,6 +47,7 @@ public class AstarAgent extends GameAgent {
 
         //initialize game parameter
         step_count = 0;
+        block_size = stateObservation.getBlockSize();
 
         //initialize list of game objects
         itemsList = stateObservation.getImmovablePositions();
@@ -131,11 +135,20 @@ public class AstarAgent extends GameAgent {
         //    return Types.ACTIONS.ACTION_USE;
         //}
         System.out.println("Passed before find path");
-        ArrayList<Node> path = pathFinder.getPath(playerPos, goalPos);
+        //System.out.println(playerPos.toString());
+        //System.out.println(goalPos.toString());
+        Vector2d playerPosition = new Vector2d(playerPos);
+        Vector2d goalPosition = new Vector2d(goalPos);
+
+        playerPosition.mul(1.0 / block_size);
+        goalPosition.mul(1.0 / block_size);
+
+        ArrayList<Node> path = pathFinder.getPath(playerPosition, goalPosition);
+
         if(path != null) {
             System.out.println("Passed after find path");
             Vector2d nextPath = path.get(0).position;
-            return getActionFromPosition(playerPos, nextPath);
+            return getActionFromPosition(playerPosition, nextPath);
         }
         System.out.println("Passed after cannot find path");
         return null;
@@ -151,13 +164,14 @@ public class AstarAgent extends GameAgent {
     @Override
     public Types.ACTIONS run(StateObservation stateObservation, ElapsedCpuTimer elapsedTime) {
 
-        Types.ACTIONS action = walkToItem(stateObservation, elapsedTime);
-        if (action != null) {
-            System.out.println("Game Tick return walk to item");
-            return action;
-        }
+        //Types.ACTIONS action = walkToItem(stateObservation, elapsedTime);
+        //if (action != null) {
+        //    System.out.println("Game Tick return walk to item");
+        //    return action;
+        //}
 
-        action = walkToPortal(stateObservation, elapsedTime);
+        Types.ACTIONS action = walkToPortal(stateObservation, elapsedTime);
+        System.out.println(action);
         if (action != null) {
             System.out.println("Game Tick return walk to portal");
             return action;
