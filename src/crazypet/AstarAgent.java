@@ -42,12 +42,6 @@ public class AstarAgent extends GameAgent {
     public AstarAgent(StateObservation stateObservation, ElapsedCpuTimer elapsedTime)
     {
         super(stateObservation, elapsedTime);
-        //initialize path finder (A star algorithm) ignored obstracle objects
-        ArrayList<Integer> obstracleTypes = new ArrayList<>();
-        obstracleTypes.add(stateObservation.getObservationGrid()[0][0].get(0).itype);
-        pathFinder = new PathFinder(obstracleTypes);
-        pathFinder.run(stateObservation);
-
         //initialize game parameter
         step_count = 0;
         prev_action = Types.ACTIONS.ACTION_NIL;
@@ -56,9 +50,19 @@ public class AstarAgent extends GameAgent {
         block_size = stateObservation.getBlockSize();
 
         //initialize list of game objects
-        itemsList = stateObservation.getImmovablePositions();
+        itemsList = stateObservation.getResourcesPositions();
         portalsList = stateObservation.getPortalsPositions();
         npcsList = stateObservation.getNPCPositions();
+
+        //initialize path finder (A star algorithm) ignored obstracle objects
+        initializeGame();
+    }
+
+    public void initializeGame(){
+        ArrayList<Integer> obstracleTypes = new ArrayList<>();
+        obstracleTypes.add(stateObservation.getObservationGrid()[0][0].get(0).itype);
+        pathFinder = new PathFinder(obstracleTypes);
+        pathFinder.run(stateObservation);
     }
 
     public int FindBestItem(StateObservation stateObservation, ElapsedCpuTimer elapsedTime){
@@ -78,7 +82,7 @@ public class AstarAgent extends GameAgent {
 
     public Types.ACTIONS walkToItem(StateObservation stateObservation, ElapsedCpuTimer elapsedTime){
         System.out.println("Enter walk to Item");
-        itemsList = stateObservation.getImmovablePositions();
+        itemsList = stateObservation.getResourcesPositions();
         if(itemsList != null){
             Vector2d playerPosition = stateObservation.getAvatarPosition();
             //upgrade best item should collect first(index get)
@@ -188,6 +192,7 @@ public class AstarAgent extends GameAgent {
 
     //activate action move but player death in next action = attack enemy
     public boolean actionCausedDeath(StateObservation nextStateObservation){
+        System.out.println("------------next step died--------------");
         return (nextStateObservation.isGameOver() && nextStateObservation.getGameWinner() == Types.WINNER.PLAYER_LOSES);
     }
 
@@ -198,6 +203,7 @@ public class AstarAgent extends GameAgent {
         //System.out.println(prev_position);
         return current_position.equals(prev_position) && prev_action != Types.ACTIONS.ACTION_USE;
     }
+
 
     //core function to return action to controller
     @Override
