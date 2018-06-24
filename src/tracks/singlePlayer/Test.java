@@ -15,17 +15,17 @@ public class Test {
     public static void main(String[] args) {
 
 		// Available tracks:
-		String sampleRandomController = "tracks.singlePlayer.simple.sampleRandom.Agent";
-		String doNothingController = "tracks.singlePlayer.simple.doNothing.Agent";
-		String sampleOneStepController = "tracks.singlePlayer.simple.sampleonesteplookahead.Agent";
-		String sampleFlatMCTSController = "tracks.singlePlayer.simple.greedyTreeSearch.Agent";
+		String sampleRandomController = "tracks.singlePlayer.simple.sampleRandom.GeneticPlayer";
+		String doNothingController = "tracks.singlePlayer.simple.doNothing.GeneticPlayer";
+		String sampleOneStepController = "tracks.singlePlayer.simple.sampleonesteplookahead.GeneticPlayer";
+		String sampleFlatMCTSController = "tracks.singlePlayer.simple.greedyTreeSearch.GeneticPlayer";
 
-		String sampleMCTSController = "tracks.singlePlayer.advanced.sampleMCTS.Agent";
-        String sampleRSController = "tracks.singlePlayer.advanced.sampleRS.Agent";
-        String sampleRHEAController = "tracks.singlePlayer.advanced.sampleRHEA.Agent";
-		String sampleOLETSController = "tracks.singlePlayer.advanced.olets.Agent";
+		String sampleMCTSController = "tracks.singlePlayer.advanced.sampleMCTS.GeneticPlayer";
+        String sampleRSController = "tracks.singlePlayer.advanced.sampleRS.GeneticPlayer";
+        String sampleRHEAController = "tracks.singlePlayer.advanced.sampleRHEA.GeneticPlayer";
+		String sampleOLETSController = "tracks.singlePlayer.advanced.olets.GeneticPlayer";
 
-		String crazypetAgent = "crazypet.Agent";
+		String crazypetAgent = "crazypet.GeneticPlayer";
 
 		//Load available games
 		String spGamesCollection =  "examples/all_games_sp.csv";
@@ -37,7 +37,7 @@ public class Test {
 
 		// Game and level to play
 		int gameIdx = 17;
-		int levelIdx = 0; // level names from 0 to 4 (game_lvlN.txt).
+		int levelIdx = 0; // level names from 0 to 4 (game_lvlN.txkt).
 		String gameName = games[gameIdx][1];
 		String game = games[gameIdx][0];
 		String level1 = game.replace(gameName, gameName + "_lvl" + levelIdx);
@@ -51,7 +51,7 @@ public class Test {
 		//ArcadeMachine.playOneGame(game, level1, recordActionsFile, seed);
 
 		// 2. This plays a game in a level by the controller.
-		ArcadeMachine.runOneGame(game, level1, visuals, crazypetAgent, recordActionsFile, seed, 0);
+		//ArcadeMachine.runOneGame(game, level1, visuals, crazypetAgent, recordActionsFile, seed, 0);
 
 		// 3. This replays a game from an action file previously recorded
 	//	 String readActionsFile = recordActionsFile;
@@ -68,22 +68,27 @@ public class Test {
 //		}
 
 		//5. This plays N games, in the first L levels, M times each. Actions to file optional (set saveActions to true).
-//		int N = games.length, L = 2, M = 1;
-//		boolean saveActions = false;
-//		String[] levels = new String[L];
-//		String[] actionFiles = new String[L*M];
-//		for(int i = 0; i < N; ++i)
-//		{
-//			int actionIdx = 0;
-//			game = games[i][0];
-//			gameName = games[i][1];
-//			for(int j = 0; j < L; ++j){
-//				levels[j] = game.replace(gameName, gameName + "_lvl" + j);
-//				if(saveActions) for(int k = 0; k < M; ++k)
-//				actionFiles[actionIdx++] = "actions_game_" + i + "_level_" + j + "_" + k + ".txt";
-//			}
-//			ArcadeMachine.runGames(game, levels, M, crazypetAgent, saveActions? actionFiles:null);
-//		}
+		int N = games.length, L = 4, M = 1;
+		boolean saveActions = false;
+		String[] levels = new String[L];
+		String[] actionFiles = new String[L*M];
+		for(int i = 0; i < N; ++i)
+		{
+			System.out.println("Game: " + i);
+			int actionIdx = 0;
+			game = games[i][0];
+			gameName = games[i][1];
+			for(int j = 0; j < L; ++j){
+				levels[j] = game.replace(gameName, gameName + "_lvl" + j);
+				if(saveActions) for(int k = 0; k < M; ++k)
+				actionFiles[actionIdx++] = "actions_game_" + i + "_level_" + j + "_" + k + ".txt";
+			}
+			try {
+				ArcadeMachine.runGames(game, levels, M, crazypetAgent, saveActions ? actionFiles : null);
+			} catch (Exception err){
+				System.out.println(err);
+			}
+		}
 
 
     }
