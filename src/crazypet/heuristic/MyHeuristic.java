@@ -12,7 +12,7 @@ public class MyHeuristic extends StateHeuristic {
         // initialize heuristic evaluation methods with determined cost for each method
         heuristics.put(new GameOverHeuristic(), 10e7);
         heuristics.put(new HealthHeuristic(), 10.0);
-        heuristics.put(new ScoreHeuristic(), 10.0);
+        heuristics.put(new ResourceHeuristic(), 10.0);
         heuristics.put(new ScoreHeuristic(), 10.0);
     }
 
