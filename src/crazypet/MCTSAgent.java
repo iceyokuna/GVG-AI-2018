@@ -24,6 +24,8 @@ public class MCTSAgent extends GameAgent {
     private Random randomGenerator;
     private boolean randomEnable;
     private int roll_dept;
+    private boolean isEnable;
+
     //Constructor. It must return in 1 second maximum.
     public MCTSAgent(StateObservation stateObservation, ElapsedCpuTimer elapsedTime)
     {
@@ -37,7 +39,8 @@ public class MCTSAgent extends GameAgent {
         backupNode = null;
         randomGenerator = new Random();
         randomEnable = false;
-        roll_dept = 0;
+        roll_dept = 99;
+        isEnable = false;
 
         //initialize path finder (A star algorithm) ignored obstracle objects
         initializeGame(stateObservation);
@@ -126,9 +129,16 @@ public class MCTSAgent extends GameAgent {
 
     public Types.ACTIONS roll_out(StateObservation stateObservation){
         ArrayList<Types.ACTIONS> actions_list = stateObservation.getAvailableActions();
-
-        int index = randomGenerator.nextInt(actions_list.size());
+        int index = 0;
+        System.out.println(actions_list.size());
+        try {
+            index = randomGenerator.nextInt(actions_list.size());
+        }
+        catch (Exception e){
+            return null;
+        }
         Types.ACTIONS action = actions_list.get(index);
+
 
         StateObservation nextState = stateObservation.copy();
         nextState.advance(action);
@@ -156,15 +166,16 @@ public class MCTSAgent extends GameAgent {
         Types.ACTIONS action = Types.ACTIONS.ACTION_NIL;
         Node selected_node = null;
         //System.out.println(elapsedTime.remainingTimeMillis());
-
-        while(dept < 0 && remaining > 30) {
-            expand();
-            //System.out.println(elapsedTime.remainingTimeMillis());
-            dept++;
+        if(isEnable) {
+            while (dept < 0 && remaining > 30) {
+                expand();
+                //System.out.println(elapsedTime.remainingTimeMillis());
+                dept++;
+            }
+            selected_node = select();
+            action = selected_node.getAction();
+            backup(selected_node);
         }
-        selected_node = select();
-        action = selected_node.getAction();
-        backup(selected_node);
 
         if(roll_dept < 20){
             action = lookAhead(stateObservation);

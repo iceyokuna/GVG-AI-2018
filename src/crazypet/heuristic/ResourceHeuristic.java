@@ -9,7 +9,7 @@ public class ResourceHeuristic implements Heuristic{
     public double evaluate(StateObservation stateObs, Double max_point){
         double cost = 0;
         for (Map.Entry resource : stateObs.getAvatarResources().entrySet()) {
-            cost += (double) resource.getValue();
+            cost += (Integer)resource.getValue();
         }
         return (cost > max_point) ? max_point : cost;
     }
